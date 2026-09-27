@@ -116,7 +116,7 @@ terceiros, responde. **Nada é gravado**: a descrição é anonimizada, analisad
    parágrafo contam como uma causa (Súmula 443); agravante que já qualificou não se repete
    (bis in idem); repouso noturno não se aplica ao furto qualificado (STJ, Tema 1.087).
 
-Casos de teste em `data/agent/casos.json` (`python -m agent.avaliacao`): 40 descrições de
+Casos de teste em `data/agent/casos.json` (`python -m agent.avaliacao`): 130 descrições de
 estudante, de furto a peculato; hoje o crime certo vem em 1º lugar em todas, com todas as
 sugestões esperadas e nenhuma indevida. Rotas: `POST /agente/analisar`, `POST
 /agente/estrutura`, `GET /agente/crimes`, `POST /agente/calcular` (30 por minuto por visitante).

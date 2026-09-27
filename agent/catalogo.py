@@ -4,6 +4,11 @@ do CP e de cada qualificadora ou causa de aumento/diminuição da parte especial
 Os indícios são expressões regulares escritas à mão, e só SUGEREM: o estudante confirma cada
 item antes do cálculo, e cada sugestão mostra a frase do caso que a motivou. As penas e as
 frações não estão aqui: vêm do texto da lei (agente/lei.py), para não haver número copiado à mão.
+
+Nos padrões, "(?:[^.;]|(?<=\\d)\\.(?=\\d))" no lugar de "[^.;]" (que exclui só o fim de frase)
+é de propósito: sem isso, um valor como "R$ 500.000,00" entre o gatilho e a palavra-chave corta
+o padrão no ponto do milhar, e o indício deixa de bater (ex.: "sequestraram ... R$ 500.000,00
+de resgate" não seria reconhecido como extorsão mediante sequestro).
 """
 
 import re
@@ -58,7 +63,7 @@ AGRAVANTES: tuple[GeneralCircumstance, ...] = (
     GeneralCircumstance("abuso_de_poder", "Abuso de poder ou violação de dever do cargo", "CP.art61.II.g", _re(r"abuso de poder|viola[çc][ãa]o de dever|valendo-se do cargo")),
     GeneralCircumstance(
         "vitima_vulneravel", "Contra criança, maior de 60 anos, enfermo ou mulher grávida", "CP.art61.II.h",
-        _re(r"crian[çc]a|idos[oa]|v[íi]tima[^.;]{0,40}\b(?:6\d|7\d|8\d|9\d) anos|gr[áa]vida|gestante|enferm[oa]"),
+        _re(r"crian[çc]a|idos[oa]|v[íi]tima(?:[^.;]|(?<=\d)\.(?=\d)){0,40}\b(?:6\d|7\d|8\d|9\d) anos|gr[áa]vida|gestante|enferm[oa]"),
     ),
     GeneralCircumstance("sob_protecao_da_autoridade", "Ofendido sob proteção da autoridade", "CP.art61.II.i", _re(r"sob (?:a )?(?:prote[çc][ãa]o|cust[óo]dia) (?:imediata )?da autoridade|escoltad")),
     GeneralCircumstance(
@@ -73,7 +78,7 @@ AGRAVANTES: tuple[GeneralCircumstance, ...] = (
 ATENUANTES: tuple[GeneralCircumstance, ...] = (
     GeneralCircumstance(
         "menoridade_ou_senilidade", "Réu menor de 21 anos na data do fato ou maior de 70 na sentença", "CP.art65.I",
-        _re(rf"{_REU}[^.;]{{0,60}}\b(?:18|19|20|7\d|8\d|9\d) anos|\b(?:18|19|20) anos[^.;]{{0,40}}{_REU}|menor de 21|maior de 70"),
+        _re(rf"{_REU}(?:[^.;]|(?<=\d)\.(?=\d)){{0,60}}\b(?:18|19|20|7\d|8\d|9\d) anos|\b(?:18|19|20) anos(?:[^.;]|(?<=\d)\.(?=\d)){{0,40}}{_REU}|menor de 21|maior de 70"),
         preponderante=True,
     ),
     GeneralCircumstance("desconhecimento_da_lei", "Desconhecimento da lei", "CP.art65.II", _re(r"desconhecia a lei|n[ãa]o sabia que (?:era|seria) crime")),
@@ -205,38 +210,48 @@ INDICIOS_DE_CRIMES: tuple[tuple[str, float, re.Pattern], ...] = tuple(
     (rotulo, peso, _re(padrao))
     for rotulo, peso, padrao in (
         ("CP.art155", 20, r"subtrai|furt(?:ou|ar|o\b|ad)|surrupi|levou (?:escondido|sem que)|pegou (?:escondido|sem pagar)"),
-        ("CP.art157", 32, r"assalt|roub(?:ou|ar|o\b|ad)|rend(?:eu|eram|ido)|anunci\w+ o assalto|mediante (?:grave )?amea[çc]a[^.;]{0,80}(?:subtrai|levou|levaram)|(?:com|armad\w*) (?:uma |um )?(?:faca|rev[óo]lver|pistola|arma)[^.;]{0,80}(?:levou|levaram|subtraiu|subtra[íi]ram)"),
-        ("CP.art121", 26, r"\bmat(?:a|am|ou|ar|aram|ando|ado|ada)\b|assassin|homic[íi]di|tirou a vida|atropel\w+[^.;]{0,60}(?:morreu|faleceu|morte)"),
+        # furto de coisa comum: precisa vencer o art. 155 quando quem subtrai é dono/herdeiro/condômino
+        ("CP.art156", 34, r"her(?:deiro|an[çc]a)(?:[^.;]|(?<=\d)\.(?=\d)){0,60}subtra|condomin\w+(?:[^.;]|(?<=\d)\.(?=\d)){0,60}subtra|coisa comum"),
+        ("CP.art157", 32, r"assalt|roub(?:ou|ar|o\b|ad)|rend(?:eu|eram|ido)|anunci\w+ o assalto|mediante (?:grave )?amea[çc]a(?:[^.;]|(?<=\d)\.(?=\d)){0,80}(?:subtrai|levou|levaram)|(?:com|armad\w*) (?:uma |um )?(?:faca|rev[óo]lver|pistola|arma)(?:[^.;]|(?<=\d)\.(?=\d)){0,80}(?:levou|levaram|subtraiu|subtra[íi]ram)"),
+        ("CP.art121", 26, r"\bmat(?:a|am|ou|ar|aram|ando|ado|ada)\b|assassin|homic[íi]di|tirou a vida|atropel\w+(?:[^.;]|(?<=\d)\.(?=\d)){0,60}(?:morreu|faleceu|morte)"),
         # feminicídio (art. 121-A, crime autônomo desde a Lei 14.994/2024): morte de mulher no contexto
         # de violência doméstica e familiar (esposa, companheira, namorada, ex)
         (
             "CP.art121-A",
             44,
-            rf"feminic[íi]di|\b(?:mat(?:a|am|ou|ar|aram|ando)|assassin\w*|esfaque\w*)\b[^.;]{{0,60}}{_PARCEIRA}"
-            rf"|{_PARCEIRA}[^.;]{{0,60}}\b(?:morreu|morta|faleceu|assassinad)",
+            rf"feminic[íi]di|\b(?:mat(?:a|am|ou|ar|aram|ando)|assassin\w*|esfaque\w*)\b(?:[^.;]|(?<=\d)\.(?=\d)){{0,60}}{_PARCEIRA}"
+            rf"|{_PARCEIRA}(?:[^.;]|(?<=\d)\.(?=\d)){{0,60}}\b(?:morreu|morta|faleceu|assassinad)",
         ),
         ("CP.art129", 22, r"agred|les[ãa]o corporal|\bsocos?\b|chutes?|espanc|machuc|feriu|hematoma|fratur"),
         ("CP.art171", 26, r"engan|golpe|estelionat|fraude|se passou por|induz\w*(?:-\w{1,4})?\s+(?:a v[íi]tima\s+)?em erro|link falso|falso (?:estorno|boleto|leil[ãa]o)|vantagem il[íi]cita"),
-        ("CP.art180", 38, r"recepta|produto de (?:furto|roubo|crime)|sabendo (?:que|ser)[^.;]{0,40}(?:roubad|furtad|produto de|origem il[íi]cita)|pe[çc]as de (?:carros|ve[íi]culos) roubad"),
-        ("CP.art147", 24, r"amea[çc]\w*[^.;]{0,40}(?:de morte|mat[áa]-l|de mal)|amea[çc]ou|(?:disse|falou|afirmou|avisou|prometeu|escreveu|gritou|mandou)[^.;]{0,60}\b(?:vai|vou|iria|ia|irá)\s+(?:matar|mat[áa]-l|machucar|bater|pegar|acabar com|quebrar)"),
-        ("CP.art168", 30, r"apropri\w+ (?:d[ao]s? |de )?(?:quantia|dinheiro|valor|bem|bens)|apropriou-se|apropria[çc][ãa]o ind[ée]bita|n[ãa]o devolveu[^.;]{0,40}(?:empresa|dono|propriet)"),
+        # estelionato com ativos virtuais: precisa vencer o art. 171 (vocabulário de fraude quase igual)
+        ("CP.art171-A", 30, r"ativo(?:s)? virtu(?:al|ais)|criptomoeda|criptoativo|carteira(?:s)? de cripto"),
+        ("CP.art180", 38, r"recepta|produto de (?:furto|roubo|crime)|sabendo (?:que|ser)(?:[^.;]|(?<=\d)\.(?=\d)){0,40}(?:roubad|furtad|produto de|origem il[íi]cita)|pe[çc]as de (?:carros|ve[íi]culos) roubad"),
+        ("CP.art147", 24, r"amea[çc]\w*(?:[^.;]|(?<=\d)\.(?=\d)){0,40}(?:de morte|mat[áa]-l|de mal)|amea[çc]ou|(?:disse|falou|afirmou|avisou|prometeu|escreveu|gritou|mandou)(?:[^.;]|(?<=\d)\.(?=\d)){0,60}\b(?:vai|vou|iria|ia|irá)\s+(?:matar|mat[áa]-l|machucar|bater|pegar|acabar com|quebrar)"),
+        ("CP.art168", 30, r"apropri\w+ (?:d[ao]s? |de )?(?:quantia|dinheiro|valor|bem|bens)|apropriou-se|apropria[çc][ãa]o ind[ée]bita|n[ãa]o devolveu(?:[^.;]|(?<=\d)\.(?=\d)){0,40}(?:empresa|dono|propriet)"),
         ("CP.art213", 34, r"estupr|conjun[çc][ãa]o carnal|ato libidinoso"),
         ("CP.art217-A", 40, r"(?:conjun[çc][ãa]o carnal|ato libidinoso|abus\w+ sexual)[^.]{0,120}(?:menor de 14|crian[çc]a|\b(?:[1-9]|1[0-3]) anos)"),
-        ("CP.art158", 30, r"extors|constrang\w+[^.;]{0,80}(?:a pagar|a entregar|vantagem econ[ôo]mica)|exig\w+ (?:dinheiro|pagamento)[^.;]{0,40}amea[çc]"),
-        ("CP.art159", 45, r"sequestr\w+[^.;]{0,120}resgate|(?:pedi|exigi|cobr)\w*[^.;]{0,20}resgate"),
+        # ato libidinoso/conjunção carnal mediante fraude (não violência): precisa vencer o art. 213
+        ("CP.art215", 38, r"(?:conjun[çc][ãa]o carnal|ato libidinoso|rela[çc][ãa]o sexual)(?:[^.;]|(?<=\d)\.(?=\d)){0,80}mediante fraude|fingindo ser[^.;]{0,60}(?:conjun[çc][ãa]o carnal|ato libidinoso|relação sexual)"),
+        # ato libidinoso sem violência/grave ameaça, sem consentimento: precisa vencer o art. 213
+        ("CP.art215-A", 37, r"ato libidinoso(?:[^.;]|(?<=\d)\.(?=\d)){0,60}sem (?:sua |o )?(?:anu[êe]ncia|consentimento)|importuna[çc][ãa]o sexual|esfregou o corpo"),
+        ("CP.art158", 30, r"extors|constrang\w+(?:[^.;]|(?<=\d)\.(?=\d)){0,80}(?:a pagar|a entregar|vantagem econ[ôo]mica)|exig\w+ (?:dinheiro|pagamento)(?:[^.;]|(?<=\d)\.(?=\d)){0,40}amea[çc]"),
+        ("CP.art159", 45, r"sequestr\w+(?:[^.;]|(?<=\d)\.(?=\d)){0,120}resgate|(?:pedi|exigi|cobr)\w*(?:[^.;]|(?<=\d)\.(?=\d)){0,20}resgate"),
+        # precisa vencer o art. 290 (petrechos/fragmentos), que sem indício ganha por semelhança de palavras
+        ("CP.art289", 32, r"fabric\w+(?:[^.;]|(?<=\d)\.(?=\d)){0,60}(?:papel-moeda|moeda|c[ée]dula|nota)(?:[^.;]|(?<=\d)\.(?=\d)){0,20}fals|papel-moeda falso|dinheiro falso"),
         ("CP.art163", 22, r"danific|destru(?:iu|[íi]ram)|quebrou|depred|pichou|pichado"),
-        ("CP.art312", 32, r"pecul|desvi\w+[^.;]{0,60}(?:dinheiro|verba|bens?|recursos?) p[úu]blic|servidor[^.;]{0,80}(?:desviou|apropriou)"),
+        ("CP.art312", 32, r"pecul|desvi\w+(?:[^.;]|(?<=\d)\.(?=\d)){0,60}(?:dinheiro|verba|bens?|recursos?) p[úu]blic|servidor(?:[^.;]|(?<=\d)\.(?=\d)){0,80}(?:desviou|apropriou)"),
         ("CP.art317", 32, r"propina|solicitou (?:vantagem|dinheiro)|recebeu (?:vantagem indevida|propina)|corrup[çc][ãa]o passiva"),
-        ("CP.art333", 32, r"ofereceu (?:propina|dinheiro|vantagem)[^.;]{0,40}(?:policial|fiscal|servidor|funcion[áa]rio|agente)|corrup[çc][ãa]o ativa"),
-        ("CP.art148", 30, r"c[áa]rcere privado|privou[^.;]{0,60}liberdade|mant\w+[^.;]{0,20}trancad|\bsequestrar\b"),
-        ("CP.art150", 24, r"invadiu (?:a )?(?:casa|resid[êe]ncia|apartamento)|viola[çc][ãa]o de domic[íi]lio|entrou[^.;]{0,40}sem (?:autoriza|permiss)"),
-        ("CP.art138", 26, r"cal[úu]ni|imputou[^.;]{0,40}crime"),
+        ("CP.art333", 32, r"ofereceu (?:propina|dinheiro|vantagem)(?:[^.;]|(?<=\d)\.(?=\d)){0,40}(?:policial|fiscal|servidor|funcion[áa]rio|agente)|corrup[çc][ãa]o ativa"),
+        ("CP.art148", 30, r"c[áa]rcere privado|privou(?:[^.;]|(?<=\d)\.(?=\d)){0,60}liberdade|mant\w+(?:[^.;]|(?<=\d)\.(?=\d)){0,20}trancad|\bsequestrar\b"),
+        ("CP.art150", 24, r"invadiu (?:a )?(?:casa|resid[êe]ncia|apartamento)|viola[çc][ãa]o de domic[íi]lio|entrou(?:[^.;]|(?<=\d)\.(?=\d)){0,40}sem (?:autoriza|permiss)"),
+        ("CP.art138", 26, r"cal[úu]ni|imputou(?:[^.;]|(?<=\d)\.(?=\d)){0,40}crime"),
         ("CP.art139", 26, r"difam"),
         ("CP.art140", 26, r"injuri|xingou|ofendeu a (?:honra|dignidade)"),
         ("CP.art288", 30, r"associa[çc][ãa]o criminosa|quadrilha|associaram-se"),
-        ("CP.art297", 28, r"falsific\w+[^.;]{0,40}documento p[úu]blico|documento p[úu]blico falso|(?:rg|cnh|carteira de identidade) falsa"),
-        ("CP.art304", 30, r"(?:usou|apresentou|fez uso de)[^.;]{0,40}(?:documento|rg|cnh|carteira)[^.;]{0,20}fals"),
-        ("CP.art329", 28, r"resist\w+ [àa] pris[ãa]o|op[ôo]s-se[^.;]{0,40}(?:mediante viol[êe]ncia|amea[çc]a)"),
+        ("CP.art297", 28, r"falsific\w+(?:[^.;]|(?<=\d)\.(?=\d)){0,40}documento p[úu]blico|documento p[úu]blico falso|(?:rg|cnh|carteira de identidade) falsa"),
+        ("CP.art304", 30, r"(?:usou|apresentou|fez uso de)(?:[^.;]|(?<=\d)\.(?=\d)){0,40}(?:documento|rg|cnh|carteira)(?:[^.;]|(?<=\d)\.(?=\d)){0,20}fals"),
+        ("CP.art329", 28, r"resist\w+ [àa] pris[ãa]o|op[ôo]s-se(?:[^.;]|(?<=\d)\.(?=\d)){0,40}(?:mediante viol[êe]ncia|amea[çc]a)"),
         ("CP.art330", 24, r"desobedec|descumpriu (?:a )?ordem"),
         ("CP.art331", 30, r"desacat|xingou (?:o|os) (?:policia|agente|servidor)"),
         ("CP.art184", 28, r"pirat|viola[çc][ãa]o de direito autoral"),
