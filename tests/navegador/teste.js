@@ -32,7 +32,7 @@ const verificar = (condicao, mensagem) => {
 
   // ---------- Início ----------
   await pagina.goto(`${BASE}/`);
-  verificar((await pagina.title()).includes("sergius-ia-Judge"), "Início: título da página");
+  verificar((await pagina.title()).includes("Juris.ia"), "Início: título da página");
   verificar(await pagina.locator('nav a[aria-current="page"]', { hasText: "Início" }).count() === 1, "Início: menu marca a página atual");
   verificar(
     JSON.stringify(await pagina.locator("nav a").allTextContents()) === JSON.stringify(["Início", "Calcular", "Analisar caso", "Praticar", "Pesquisar na lei", "Como funciona"]),

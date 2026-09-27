@@ -1,4 +1,4 @@
-"""API HTTP do sergius-ia-Judge.
+"""API HTTP do Juris.ia.
 
 Rodar localmente:  uvicorn api.app:app --reload
 Páginas para estudantes: http://127.0.0.1:8000/
@@ -6,7 +6,9 @@ Documentação interativa da API: http://127.0.0.1:8000/docs
 """
 
 import json
+import logging
 import os
+import sys
 from functools import cache
 from threading import Thread
 from pathlib import Path
@@ -19,7 +21,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 
-from dosimetria import (
+from erros import ErroDeEntrada
+from sentencing import (
     JudicialCircumstance,
     Composition,
     CircumstanceDirection,
@@ -30,15 +33,16 @@ from dosimetria import (
     pena_para_dict,
     resultado_para_dict,
 )
-from dosimetria.entrada import ESTRATEGIAS, pena_de_dict
+from sentencing.entrada import ESTRATEGIAS, pena_de_dict
 
-from banco import banco_configurado
-from fontes.busca import base_de_fontes
+from database import banco_configurado
+from sources.busca import base_de_fontes
 from web.rotas import PASTA_ESTATICOS, roteador as rotas_das_paginas
 
 from .agente import roteador as rotas_do_agente
 from .casos import roteador as rotas_dos_casos
 from .fontes import com_fontes_citadas, roteador as rotas_das_fontes
+from .metricas import MetricsMiddleware
 from .seguranca import RateLimiter, SecurityHeadersMiddleware, cabecalho_de_ip, protecao_de_ip
 
 from .esquemas import (
@@ -51,13 +55,21 @@ from .esquemas import (
     SentencingOutput,
 )
 
-ARQUIVO_EXEMPLOS = Path(__file__).resolve().parent.parent / "dados" / "casos" / "dosimetrias.json"
+ARQUIVO_EXEMPLOS = Path(__file__).resolve().parent.parent / "data" / "casos" / "dosimetrias.json"
+
+# sem isto, um log sem handler configurado (ex.: erro inesperado, falha de banco) some ou vai
+# parar no stderr sem formato; hospedagens como o Render mostram melhor uma saída assim, em
+# stdout e com data/hora. As "métricas de uso" (api/metricas.py) têm o próprio handler, à parte,
+# porque são uma linha de JSON só, sem prefixo.
+logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s", stream=sys.stdout)
+
+log = logging.getLogger(__name__)
 
 # cálculo e correção: folga para um estudante praticando, sem deixar um script ocupar o servidor
 limite_calculo = RateLimiter("calculo", limite=60, janela=60, limite_global=3000)
 
 app = FastAPI(
-    title="sergius-ia-Judge",
+    title="Juris.ia",
     version="0.1.0",
     description=(
         "Motor de dosimetria penal (sistema trifásico do art. 68 do CP) para estudo. "
@@ -71,6 +83,8 @@ app = FastAPI(
 # Outros sites só podem LER dados públicos (GET). Envios (POST/DELETE) só a partir das nossas
 # próprias páginas: assim um site de terceiros não consegue gravar casos em nome de um visitante.
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["GET"], allow_headers=[])
+# fica por dentro do SecurityHeadersMiddleware: só vê o corpo já cortado no tamanho máximo
+app.add_middleware(MetricsMiddleware)
 # adicionado por último = executa primeiro: cabeçalhos de segurança e limite de tamanho em tudo
 app.add_middleware(SecurityHeadersMiddleware)
 
@@ -85,10 +99,24 @@ Thread(target=base_de_fontes, daemon=True).start()
 app.mount("/static", StaticFiles(directory=PASTA_ESTATICOS), name="static")
 
 
-@app.exception_handler(ValueError)
-async def erro_de_entrada(_: Request, erro: ValueError) -> JSONResponse:
-    """Regras do motor violadas pela entrada (ex.: fração acima da mínima sem justificativa)."""
+@app.exception_handler(ErroDeEntrada)
+async def erro_de_entrada(_: Request, erro: ErroDeEntrada) -> JSONResponse:
+    """Regras do motor violadas pela entrada (ex.: fração acima da mínima sem justificativa).
+
+    Só ErroDeEntrada (erros.py) chega aqui: é a exceção que o próprio projeto levanta com
+    uma mensagem pronta para mostrar. Qualquer outro erro cai em erro_inesperado, que nunca
+    ecoa a mensagem original.
+    """
     return JSONResponse(status_code=422, content={"detail": str(erro)})
+
+
+@app.exception_handler(Exception)
+async def erro_inesperado(_: Request, erro: Exception) -> JSONResponse:
+    """Rede de segurança: nenhum erro que não seja um dos tratados acima chega ao visitante
+    com a própria mensagem (poderia trazer caminho de arquivo, string de conexão ou outro
+    detalhe interno). O detalhe completo vai só para o log do servidor."""
+    log.error("erro não tratado: %s: %s", type(erro).__name__, erro, exc_info=erro)
+    return JSONResponse(status_code=500, content={"detail": "O servidor teve um problema. Tente de novo em instantes."})
 
 
 _MENSAGENS = {

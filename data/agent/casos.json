@@ -1,0 +1,794 @@
+{
+  "descricao": "Casos de teste do agente da aba Analisar caso: a descrição, o crime que precisa vir em 1º lugar e o que precisa ser sugerido (rótulos de formas e causas, códigos de agravantes, atenuantes e circunstâncias). 'nao_sugerir' lista o que não pode aparecer como sugestão (ex.: bis in idem).",
+  "casos": [
+    {
+      "id": "furto-noturno-reincidente",
+      "descricao": "Em março de 2024, por volta das 2h da madrugada, o réu entrou em uma loja fechada e subtraiu dois celulares. Ele é reincidente em furto, com condenação definitiva anterior. Interrogado, confessou o crime.",
+      "crime": "CP.art155",
+      "sugerir": [
+        "CP.art155.§1",
+        "reincidencia",
+        "confissao_espontanea"
+      ],
+      "nao_sugerir": [
+        "CP.art14.parágrafo_único"
+      ]
+    },
+    {
+      "id": "furto-qualificado-arrombamento-comparsa",
+      "descricao": "O acusado, junto com um comparsa, arrombou a porta de uma residência durante o dia e subtraiu uma televisão e joias. Os dois foram presos dias depois com os objetos.",
+      "crime": "CP.art155",
+      "sugerir": [
+        "CP.art155.§4.I",
+        "CP.art155.§4.IV"
+      ]
+    },
+    {
+      "id": "furto-tentado",
+      "descricao": "O réu tentou subtrair uma bicicleta que estava presa no bicicletário de um mercado, mas foi impedido pelo segurança antes de conseguir sair com ela. O bem foi devolvido intacto à vítima.",
+      "crime": "CP.art155",
+      "sugerir": [
+        "CP.art14.parágrafo_único"
+      ]
+    },
+    {
+      "id": "roubo-faca",
+      "descricao": "O réu abordou a vítima em um ponto de ônibus e, com uma faca, anunciou o assalto e levou a bolsa e o celular dela. Foi preso em flagrante minutos depois.",
+      "crime": "CP.art157",
+      "sugerir": [
+        "CP.art157.§2.VII"
+      ]
+    },
+    {
+      "id": "roubo-arma-de-fogo-dupla",
+      "descricao": "Dois homens armados com um revólver renderam o motorista de um aplicativo, mantiveram a vítima no porta-malas por duas horas e levaram o carro. O acusado tinha 19 anos na data do fato.",
+      "crime": "CP.art157",
+      "sugerir": [
+        "CP.art157.§2-A.I",
+        "CP.art157.§2.II",
+        "CP.art157.§2.V",
+        "menoridade_ou_senilidade"
+      ],
+      "nao_sugerir": [
+        "CP.art157.§2-B"
+      ]
+    },
+    {
+      "id": "latrocinio",
+      "descricao": "Durante o assalto a uma farmácia, o réu atirou no farmacêutico, que morreu no local, e fugiu com o dinheiro do caixa.",
+      "crime": "CP.art157",
+      "sugerir": [
+        "CP.art157.§3.II",
+        "CP.art157.§2-A.I"
+      ]
+    },
+    {
+      "id": "homicidio-motivo-futil",
+      "descricao": "Após uma discussão por causa de uma vaga de estacionamento, o acusado matou a vítima com vários golpes de faca. O motivo foi considerado fútil pela acusação.",
+      "crime": "CP.art121",
+      "sugerir": [
+        "CP.art121.§2.II"
+      ],
+      "nao_sugerir": [
+        "motivo_futil_ou_torpe"
+      ]
+    },
+    {
+      "id": "homicidio-culposo-transito",
+      "descricao": "O réu dirigia em excesso de velocidade, perdeu o controle do carro e atropelou um pedestre, que morreu. Foi um acidente, sem intenção de matar.",
+      "crime": "CP.art121",
+      "sugerir": [
+        "CP.art121.§3"
+      ]
+    },
+    {
+      "id": "lesao-grave-fratura",
+      "descricao": "Em uma briga de bar, o réu agrediu a vítima com socos e chutes, causando fratura no braço e afastamento do trabalho por 45 dias.",
+      "crime": "CP.art129",
+      "sugerir": [
+        "CP.art129.§1.I"
+      ]
+    },
+    {
+      "id": "lesao-violencia-domestica",
+      "descricao": "O réu agrediu a companheira dentro de casa, causando hematomas no rosto e nos braços. O caso foi registrado como violência doméstica.",
+      "crime": "CP.art129",
+      "sugerir": [
+        "CP.art129.§9"
+      ]
+    },
+    {
+      "id": "estelionato-idoso",
+      "descricao": "A ré se passou por funcionária do banco, enganou uma vítima de 78 anos e obteve dela R$ 15.000,00 em transferências, induzindo-a em erro com um falso estorno.",
+      "crime": "CP.art171",
+      "sugerir": [
+        "CP.art171.§4"
+      ],
+      "nao_sugerir": [
+        "vitima_vulneravel"
+      ]
+    },
+    {
+      "id": "fraude-eletronica",
+      "descricao": "O acusado enviou mensagens de WhatsApp com um link falso de promoção e, com os dados bancários obtidos, fez transferências por PIX das contas das vítimas, obtendo vantagem ilícita.",
+      "crime": "CP.art171",
+      "sugerir": [
+        "CP.art171.§2-A"
+      ]
+    },
+    {
+      "id": "receptacao",
+      "descricao": "O réu comprou um celular de um desconhecido na rua por R$ 100, sabendo que o aparelho era produto de furto, e o revendeu depois.",
+      "crime": "CP.art180"
+    },
+    {
+      "id": "ameaca",
+      "descricao": "Por mensagens, o réu ameaçou de morte o vizinho, dizendo que iria matá-lo se ele reclamasse de novo do barulho.",
+      "crime": "CP.art147"
+    },
+    {
+      "id": "apropriacao-indebita",
+      "descricao": "O funcionário recebeu o dinheiro das vendas do dia para depositar no banco, mas se apropriou da quantia e não devolveu à empresa.",
+      "crime": "CP.art168"
+    },
+    {
+      "id": "estupro",
+      "descricao": "O réu constrangeu a vítima, mediante violência, a ter conjunção carnal com ele, em um terreno baldio.",
+      "crime": "CP.art213"
+    },
+    {
+      "id": "extorsao",
+      "descricao": "O acusado constrangeu o comerciante, mediante grave ameaça, a pagar mensalmente uma quantia em dinheiro para não ter a loja destruída, obtendo indevida vantagem econômica.",
+      "crime": "CP.art158"
+    },
+    {
+      "id": "dano",
+      "descricao": "Irritado com o vizinho, o réu destruiu o portão e quebrou os vidros do carro dele com um pedaço de pau.",
+      "crime": "CP.art163"
+    },
+    {
+      "id": "peculato",
+      "descricao": "O servidor público, valendo-se do cargo, desviou em proveito próprio dinheiro público de que tinha a posse em razão do cargo na prefeitura.",
+      "crime": "CP.art312"
+    },
+    {
+      "id": "corrupcao-passiva",
+      "descricao": "O fiscal da prefeitura solicitou propina ao dono do restaurante para não aplicar a multa, recebendo vantagem indevida em razão da função.",
+      "crime": "CP.art317"
+    },
+    {
+      "id": "sequestro-carcere",
+      "descricao": "O réu privou a ex-namorada de sua liberdade, mantendo-a trancada em cárcere privado no apartamento por três dias.",
+      "crime": "CP.art148"
+    },
+    {
+      "id": "furto-continuado-empregada",
+      "descricao": "A empregada doméstica, de confiança da família, subtraiu joias da patroa em várias ocasiões ao longo de seis meses.",
+      "crime": "CP.art155",
+      "sugerir": [
+        "CP.art155.§4.II",
+        "CP.art71"
+      ]
+    },
+    {
+      "id": "citacao-direta",
+      "descricao": "Caso de receptação qualificada, art. 180 do CP, em que o réu, comerciante de autopeças, vendia peças de carros roubados na sua loja.",
+      "crime": "CP.art180"
+    },
+    {
+      "id": "feminicidio-esposa-nao-confessou",
+      "descricao": "Por volta das 2 horas da manhã, um homem com 23 anos mata sua esposa com facadas em sua cabeça, dia 23 de setembro e não confessou, a vitima foi uma mulher de 29 anos identificada como Lane",
+      "crime": "CP.art121-A",
+      "nao_sugerir": [
+        "confissao_espontanea",
+        "relacoes_domesticas",
+        "contra_familiar",
+        "CP.art155.§1"
+      ]
+    },
+    {
+      "id": "feminicidio-na-frente-dos-filhos",
+      "descricao": "O acusado assassinou a ex-companheira a golpes de faca, na frente dos filhos do casal, descumprindo a medida protetiva que o proibia de se aproximar dela.",
+      "crime": "CP.art121-A",
+      "sugerir": [
+        "CP.art121-A.§2.III",
+        "CP.art121-A.§2.IV"
+      ]
+    },
+    {
+      "id": "homicidio-verbo-no-presente",
+      "descricao": "Depois de uma briga no bar, o réu mata o vizinho com dois tiros e foge. Ele nunca foi condenado antes e não é reincidente.",
+      "crime": "CP.art121",
+      "nao_sugerir": [
+        "reincidencia"
+      ]
+    },
+    {
+      "id": "furto-qualificado-noturno",
+      "descricao": "Por volta das 2h da madrugada, o réu, junto com um comparsa, arrombou a porta de uma loja e subtraiu dois celulares.",
+      "crime": "CP.art155",
+      "sugerir": [
+        "CP.art155.§4.I",
+        "CP.art155.§4.IV"
+      ],
+      "nao_sugerir": [
+        "CP.art155.§1"
+      ]
+    },
+    {
+      "id": "furto-privilegiado",
+      "descricao": "O réu, primário, subtraiu de um supermercado um pacote de carne no valor de R$ 45,00. O bem foi recuperado.",
+      "crime": "CP.art155",
+      "sugerir": [
+        "CP.art155.§2"
+      ]
+    },
+    {
+      "id": "vocabulario-assassinou",
+      "descricao": "O réu assassinou o vizinho com dois tiros depois de uma discussão por causa de barulho.",
+      "crime": "CP.art121"
+    },
+    {
+      "id": "vocabulario-surrupiou",
+      "descricao": "O rapaz surrupiou a carteira de um passageiro no ônibus lotado, sem que ele percebesse.",
+      "crime": "CP.art155",
+      "sugerir": [
+        "CP.art155.§4.II"
+      ]
+    },
+    {
+      "id": "vocabulario-espancou",
+      "descricao": "Durante uma briga, o acusado espancou a vítima, que ficou com hematomas e o nariz fraturado.",
+      "crime": "CP.art129"
+    },
+    {
+      "id": "vocabulario-raptaram-resgate",
+      "descricao": "Os dois homens raptaram o empresário e exigiram um resgate de 500 mil reais da família.",
+      "crime": "CP.art159"
+    },
+    {
+      "id": "vocabulario-apunhalou-ex-companheira",
+      "descricao": "O acusado apunhalou a ex-companheira dentro da casa dela.",
+      "crime": "CP.art121-A",
+      "nao_sugerir": [
+        "relacoes_domesticas"
+      ]
+    },
+    {
+      "id": "vocabulario-iludiu",
+      "descricao": "A ré iludiu a vítima com um falso investimento e obteve dela vinte mil reais.",
+      "crime": "CP.art171"
+    },
+    {
+      "id": "vocabulario-violentou",
+      "descricao": "O réu violentou a vítima em um terreno baldio, mediante grave ameaça.",
+      "crime": "CP.art213"
+    },
+    {
+      "id": "vocabulario-balearam-assalto",
+      "descricao": "Os criminosos balearam o segurança durante o assalto ao carro-forte e levaram os malotes.",
+      "crime": "CP.art157",
+      "sugerir": [
+        "CP.art157.§2.III"
+      ]
+    },
+    {
+      "id": "vocabulario-tentou-matar",
+      "descricao": "O réu tentou matar a vítima com uma faca, mas ela sobreviveu depois de socorrida.",
+      "crime": "CP.art121",
+      "sugerir": [
+        "CP.art14.parágrafo_único"
+      ]
+    },
+    {
+      "id": "vocabulario-intencao-nao-e-fato",
+      "descricao": "Pelo telefone, o acusado disse ao vizinho que vai matar ele e toda a família.",
+      "crime": "CP.art147"
+    },
+    {
+      "id": "furto-valor-alto-nao-privilegiado",
+      "descricao": "O réu arrombou a porta dos fundos de uma loja fechada e subtraiu celulares avaliados em R$ 3.000, sem reparação até o momento.",
+      "crime": "CP.art155",
+      "sugerir": [
+        "CP.art155.§4.I"
+      ],
+      "nao_sugerir": [
+        "CP.art155.§2"
+      ]
+    },
+    {
+      "id": "estelionato-pronome-enclitico",
+      "descricao": "Fingindo ser representante de uma instituição financeira, o réu convenceu a vítima, uma senhora de 75 anos, a transferir R$ 8.500,00 para uma conta bancária, induzindo-a em erro.",
+      "crime": "CP.art171"
+    },
+    {
+      "id": "sequestro-mais-de-15-dias",
+      "descricao": "O réu manteve a vítima trancada em um cômodo da própria casa por 20 dias, sem deixá-la sair nem se comunicar com a família.",
+      "crime": "CP.art148"
+    },
+    {
+      "id": "sequestro-filho-do-sequestrado",
+      "descricao": "Para pressionar o pai a pagar uma dívida, o réu manteve trancado, por três dias, o filho de 10 anos da vítima.",
+      "crime": "CP.art148"
+    },
+    {
+      "id": "sequestro-fins-libidinosos",
+      "descricao": "O réu manteve a vítima trancada num quarto de motel por dois dias, à sua disposição para fins libidinosos.",
+      "crime": "CP.art148"
+    },
+    {
+      "id": "sequestro-mediante-internacao",
+      "descricao": "O réu privou a vítima de sua liberdade, sem necessidade, ao interná-la à força numa clínica psiquiátrica particular, contra a vontade dela.",
+      "crime": "CP.art148"
+    },
+    {
+      "id": "extorsao-sequestro-resgate-pago",
+      "descricao": "Os réus sequestraram o empresário e exigiram R$ 500.000,00 de resgate para libertá-lo; a família pagou e a vítima foi solta em seguida, sem lesões.",
+      "crime": "CP.art159"
+    },
+    {
+      "id": "extorsao-sequestro-lesao-grave",
+      "descricao": "Os sequestradores mantiveram a vítima em cativeiro exigindo resgate, e ela sofreu lesão corporal grave em consequência dos maus-tratos no cativeiro.",
+      "crime": "CP.art159",
+      "sugerir": [
+        "CP.art159.§2"
+      ]
+    },
+    {
+      "id": "extorsao-sequestro-concurso",
+      "descricao": "Um grupo de quatro pessoas sequestrou o comerciante e exigiu resgate da família para devolvê-lo com vida.",
+      "crime": "CP.art159"
+    },
+    {
+      "id": "estupro-vulneravel-crianca",
+      "descricao": "O réu, adulto, praticou conjunção carnal com uma criança de 9 anos, filha de sua companheira.",
+      "crime": "CP.art217-A"
+    },
+    {
+      "id": "estupro-vulneravel-lesao-grave",
+      "descricao": "O réu manteve conjunção carnal com uma menor de 12 anos, causando-lhe lesão corporal grave.",
+      "crime": "CP.art217-A",
+      "sugerir": [
+        "CP.art217-A.§3"
+      ]
+    },
+    {
+      "id": "estupro-vulneravel-morte",
+      "descricao": "O réu praticou ato libidinoso com uma criança de 8 anos e, em razão da violência empregada, a vítima morreu.",
+      "crime": "CP.art217-A",
+      "sugerir": [
+        "CP.art217-A.§4"
+      ]
+    },
+    {
+      "id": "dano-simples-veiculo",
+      "descricao": "Após uma discussão, o réu quebrou o para-brisa e riscou toda a lataria do carro do vizinho.",
+      "crime": "CP.art163"
+    },
+    {
+      "id": "dano-violencia-pessoa",
+      "descricao": "Empurrando a vítima para o lado, o réu destruiu o computador do escritório dela a marretadas.",
+      "crime": "CP.art163"
+    },
+    {
+      "id": "dano-motivo-egoistico",
+      "descricao": "Por inveja e para prejudicar o ex-sócio, o réu destruiu a marretadas todo o estoque da loja que pertencia à antiga sociedade.",
+      "crime": "CP.art163"
+    },
+    {
+      "id": "apropriacao-indebita-caseiro",
+      "descricao": "O caseiro, que tinha a posse das ferramentas e dos equipamentos do sítio para uso no trabalho, vendeu tudo e não devolveu nada ao proprietário.",
+      "crime": "CP.art168"
+    },
+    {
+      "id": "apropriacao-indebita-tutor",
+      "descricao": "Na condição de tutor da criança, o réu se apropriou de valores da pensão por morte recebida em nome do menor.",
+      "crime": "CP.art168"
+    },
+    {
+      "id": "apropriacao-indebita-deposito-judicial",
+      "descricao": "Nomeado depositário judicial dos bens penhorados, o réu se apropriou dos bens e os vendeu, quando deveria apenas guardá-los.",
+      "crime": "CP.art168"
+    },
+    {
+      "id": "receptacao-qualificada-oficina",
+      "descricao": "No exercício de atividade comercial de autopeças, o réu comprava e revendia peças de veículos que sabia serem produto de roubo.",
+      "crime": "CP.art180"
+    },
+    {
+      "id": "receptacao-culposa-celular-barato",
+      "descricao": "O réu comprou um celular por um preço muito abaixo do mercado, de um desconhecido na rua, sem desconfiar da origem, mas deveria ter percebido que era produto de furto.",
+      "crime": "CP.art180"
+    },
+    {
+      "id": "receptacao-simples-tv",
+      "descricao": "Sabendo que a televisão era produto de furto de uma casa vizinha, o réu comprou o aparelho por um preço baixo.",
+      "crime": "CP.art180"
+    },
+    {
+      "id": "extorsao-ameaca-divida",
+      "descricao": "Mediante grave ameaça de agressão, o réu constrangeu a vítima a entregar um cheque assinado em seu favor, simulando uma dívida que não existia.",
+      "crime": "CP.art158"
+    },
+    {
+      "id": "extorsao-restricao-liberdade",
+      "descricao": "O réu manteve a vítima em seu carro, rodando pela cidade, e a constrangeu, mediante ameaça, a entregar vantagem econômica por transferência bancária pelo celular.",
+      "crime": "CP.art158"
+    },
+    {
+      "id": "extorsao-arma-de-fogo",
+      "descricao": "Apontando uma arma de fogo, o réu constrangeu a vítima a entregar a senha do cartão e fazer um saque em seu favor.",
+      "crime": "CP.art158"
+    },
+    {
+      "id": "injuria-simples-xingamento",
+      "descricao": "Durante a discussão, o réu xingou repetidamente a vítima, chamando-a de vagabunda e imprestável na frente de outras pessoas.",
+      "crime": "CP.art140"
+    },
+    {
+      "id": "injuria-racial",
+      "descricao": "Durante a discussão de trânsito, o réu xingou a vítima chamando-a de macaco, em razão da cor da pele dela.",
+      "crime": "CP.art140"
+    },
+    {
+      "id": "injuria-real-tapa",
+      "descricao": "O réu xingou a vítima e, além disso, deu-lhe um tapa no rosto, na frente de todos, para humilhá-la.",
+      "crime": "CP.art140"
+    },
+    {
+      "id": "peculato-desvio-servidor",
+      "descricao": "O servidor público, responsável pelo caixa da repartição, desviou parte do dinheiro arrecadado em favor de um amigo.",
+      "crime": "CP.art312"
+    },
+    {
+      "id": "peculato-furto-funcionario",
+      "descricao": "Aproveitando-se da facilidade de acesso ao almoxarifado da prefeitura, o servidor desviou material de construção do depósito público para uso próprio.",
+      "crime": "CP.art312"
+    },
+    {
+      "id": "peculato-culposo-negligencia",
+      "descricao": "Trata-se de hipótese de peculato culposo: por negligência do servidor público, que deixou o dinheiro público exposto, um terceiro conseguiu subtraí-lo.",
+      "crime": "CP.art312",
+      "sugerir": [
+        "CP.art312.§2"
+      ]
+    },
+    {
+      "id": "corrupcao-passiva-fiscal",
+      "descricao": "O fiscal municipal exigiu propina do dono do restaurante para não lavrar o auto de infração sanitária.",
+      "crime": "CP.art317"
+    },
+    {
+      "id": "corrupcao-passiva-antes-nomeacao",
+      "descricao": "Ainda antes de assumir o cargo para o qual havia sido aprovado em concurso, o futuro servidor já recebeu vantagem indevida prometendo facilitar um processo assim que tomasse posse.",
+      "crime": "CP.art317"
+    },
+    {
+      "id": "violacao-domicilio-noite",
+      "descricao": "Sem autorização e contra a vontade do morador, o réu entrou na casa da vítima durante a madrugada.",
+      "crime": "CP.art150"
+    },
+    {
+      "id": "violacao-domicilio-simples",
+      "descricao": "O réu invadiu o quintal da casa vizinha, sem autorização e contra a vontade expressa do morador, para recuperar uma bola.",
+      "crime": "CP.art150"
+    },
+    {
+      "id": "omissao-socorro-atropelamento",
+      "descricao": "Após ver a vítima ferida e caída no acostamento depois de um acidente, o réu não prestou nenhum socorro nem pediu ajuda a ninguém, podendo fazê-lo sem risco pessoal.",
+      "crime": "CP.art135"
+    },
+    {
+      "id": "omissao-socorro-crianca-perdida",
+      "descricao": "Encontrando uma criança perdida e chorando na rua, à noite, o réu simplesmente ignorou e seguiu seu caminho, podendo ajudá-la sem nenhum risco.",
+      "crime": "CP.art135"
+    },
+    {
+      "id": "constrangimento-ilegal-assinatura",
+      "descricao": "Mediante grave ameaça, o réu constrangeu a vítima a assinar um documento contra sua própria vontade.",
+      "crime": "CP.art146"
+    },
+    {
+      "id": "constrangimento-ilegal-nao-fazer",
+      "descricao": "Usando de violência, e cometendo constrangimento ilegal, o réu impediu a vítima de sair de casa para ir ao trabalho, contra a vontade dela.",
+      "crime": "CP.art146"
+    },
+    {
+      "id": "calunia-falsa-acusacao-furto",
+      "descricao": "O réu imputou falsamente à vítima a prática de um crime, sabendo que ela era inocente, espalhando isso entre os colegas de trabalho.",
+      "crime": "CP.art138"
+    },
+    {
+      "id": "calunia-imprensa",
+      "descricao": "Sabendo ser falso, o réu imputou à vítima a prática de um crime, em publicação nas redes sociais de grande alcance.",
+      "crime": "CP.art138"
+    },
+    {
+      "id": "difamacao-boato-trabalho",
+      "descricao": "O réu espalhou entre os colegas de trabalho que a vítima havia sido demitida do emprego anterior por desonestidade, atribuindo a ela um fato ofensivo à reputação, verdadeiro ou não.",
+      "crime": "CP.art139"
+    },
+    {
+      "id": "difamacao-funcao-publica",
+      "descricao": "Em referência às funções do cargo público que a vítima ocupa, o réu a difamou publicamente, dizendo, sem provas, que ela favorecia amigos nas decisões da repartição.",
+      "crime": "CP.art139"
+    },
+    {
+      "id": "associacao-criminosa-furtos",
+      "descricao": "Os quatro réus se associaram de forma estável e organizada, especificamente para praticar furtos em série contra estabelecimentos comerciais da região.",
+      "crime": "CP.art288"
+    },
+    {
+      "id": "associacao-criminosa-armada",
+      "descricao": "Os cinco réus formavam uma associação criminosa estável, destinada à prática de roubos, e mantinham armas de fogo guardadas em um esconderijo comum.",
+      "crime": "CP.art288"
+    },
+    {
+      "id": "falsificacao-documento-publico-crlv",
+      "descricao": "O réu falsificou o documento do veículo (CRLV), documento público, para vender o carro como se fosse regular.",
+      "crime": "CP.art297"
+    },
+    {
+      "id": "falsificacao-carteira-funcional",
+      "descricao": "Sendo servidor público, o réu falsificou documento público de identificação para obter vantagens indevidas em repartições públicas.",
+      "crime": "CP.art297"
+    },
+    {
+      "id": "resistencia-prisao",
+      "descricao": "No momento da prisão em flagrante, o réu resistiu à prisão com socos contra os policiais, para impedir a execução da ordem legal.",
+      "crime": "CP.art329"
+    },
+    {
+      "id": "resistencia-arma-branca",
+      "descricao": "Ao ser abordado pelos agentes para cumprimento de mandado de busca, o réu opôs-se à diligência mediante ameaça, sacando uma faca.",
+      "crime": "CP.art329"
+    },
+    {
+      "id": "desobediencia-ordem-judicial",
+      "descricao": "Intimado por decisão judicial a entregar os documentos contábeis da empresa em cinco dias, o réu descumpriu a ordem, sem entregar nem justificar.",
+      "crime": "CP.art330"
+    },
+    {
+      "id": "desobediencia-fiscalizacao",
+      "descricao": "Notificado pela vigilância sanitária a interditar a área contaminada, o réu manteve o local funcionando normalmente, desobedecendo à ordem.",
+      "crime": "CP.art330"
+    },
+    {
+      "id": "desacato-delegacia",
+      "descricao": "Durante o registro do boletim de ocorrência, o réu xingou o policial, chamando-o de incompetente e outros insultos, no exercício da função.",
+      "crime": "CP.art331"
+    },
+    {
+      "id": "desacato-audiencia",
+      "descricao": "Durante a audiência, o réu desacatou o juiz, chamando-o de parcial e corrupto, em razão do cargo que exercia.",
+      "crime": "CP.art331"
+    },
+    {
+      "id": "corrupcao-ativa-oferecer-fiscal",
+      "descricao": "Para não ser multado, o réu ofereceu dinheiro ao fiscal municipal para que ele deixasse de lavrar o auto de infração.",
+      "crime": "CP.art333"
+    },
+    {
+      "id": "corrupcao-ativa-facilitar-licitacao",
+      "descricao": "O empresário ofereceu vantagem indevida ao servidor público responsável pela licitação, para que ele facilitasse a vitória da sua empresa.",
+      "crime": "CP.art333"
+    },
+    {
+      "id": "estupro-lesao-grave",
+      "descricao": "Além de constranger a vítima mediante violência a manter conjunção carnal, o réu causou-lhe lesão corporal grave durante o ataque.",
+      "crime": "CP.art213",
+      "sugerir": [
+        "CP.art213.§1"
+      ]
+    },
+    {
+      "id": "estupro-morte-vitima",
+      "descricao": "Em razão da violência empregada durante o estupro, a vítima morreu em decorrência dos ferimentos.",
+      "crime": "CP.art213",
+      "sugerir": [
+        "CP.art213.§2"
+      ]
+    },
+    {
+      "id": "abandono-incapaz-recem-nascido",
+      "descricao": "A mãe deixou o recém-nascido, incapaz de se defender, sozinho dentro de casa por dois dias, sem qualquer cuidado, saindo de viagem sem avisar ninguém.",
+      "crime": "CP.art133"
+    },
+    {
+      "id": "abandono-incapaz-lesao-grave",
+      "descricao": "Responsável pelos cuidados do idoso incapaz de se cuidar sozinho, o réu o expôs a perigo, abandonando-o sozinho em local ermo e de difícil acesso.",
+      "crime": "CP.art133"
+    },
+    {
+      "id": "abandono-incapaz-morte",
+      "descricao": "Abandonado pelo cuidador em um local ermo, sem qualquer condição de se cuidar, o paciente acamado morreu em decorrência do abandono.",
+      "crime": "CP.art133"
+    },
+    {
+      "id": "invasao-dispositivo-celular-ex",
+      "descricao": "Sem autorização e violando indevidamente o mecanismo de segurança do dispositivo informático da ex-namorada, o réu o invadiu para ler as conversas privadas dela.",
+      "crime": "CP.art154-A"
+    },
+    {
+      "id": "invasao-dispositivo-obter-dados-bancarios",
+      "descricao": "O réu invadiu o dispositivo informático da vítima, violando indevidamente o mecanismo de segurança, com o fim de obter os dados bancários armazenados ali.",
+      "crime": "CP.art154-A"
+    },
+    {
+      "id": "invasao-dispositivo-fotos-intimas",
+      "descricao": "Depois de invadir o dispositivo informático da vítima, violando o mecanismo de segurança sem autorização, o réu divulgou as fotos íntimas que encontrou lá.",
+      "crime": "CP.art154-A"
+    },
+    {
+      "id": "maus-tratos-privacao-alimentos",
+      "descricao": "Responsável pelos cuidados da criança sob sua guarda, o réu a privava de alimentação como forma de disciplina, sujeitando-a a maus-tratos constantes.",
+      "crime": "CP.art136"
+    },
+    {
+      "id": "maus-tratos-lesao-grave",
+      "descricao": "Abusando dos meios de correção e disciplina, o responsável pela criança a submetia a castigos físicos frequentes e excessivos com um cinto.",
+      "crime": "CP.art136"
+    },
+    {
+      "id": "rixa-briga-generalizada",
+      "descricao": "Numa rixa generalizada na saída do bar, várias pessoas brigaram ao mesmo tempo, sem que se pudesse identificar quem fez o quê.",
+      "crime": "CP.art137"
+    },
+    {
+      "id": "furto-coisa-comum-heranca",
+      "descricao": "Um dos herdeiros subtraiu para si só uma joia que pertencia à herança ainda não dividida entre os irmãos, sem autorização dos demais.",
+      "crime": "CP.art156"
+    },
+    {
+      "id": "furto-noturno-vulto-alto",
+      "descricao": "Durante a madrugada, o réu arrombou o portão dos fundos e subtraiu diversas ferramentas do galpão da vítima.",
+      "crime": "CP.art155",
+      "sugerir": [
+        "CP.art155.§4.I"
+      ]
+    },
+    {
+      "id": "fraude-ativos-virtuais",
+      "descricao": "O réu organizava e ofertava carteiras de ativos virtuais na internet, prometendo rendimentos, com o fim de obter vantagem ilícita em prejuízo dos investidores que aplicaram nele.",
+      "crime": "CP.art171-A"
+    },
+    {
+      "id": "fraude-comercio-peso",
+      "descricao": "Enganando os consumidores, o dono do mercado vendia mercadoria deteriorada como se fosse verdadeira e perfeita.",
+      "crime": "CP.art175"
+    },
+    {
+      "id": "violacao-sexual-fraude-medico",
+      "descricao": "Fingindo ser um procedimento médico necessário, o réu praticou ato libidinoso mediante fraude com a paciente, que não percebeu a verdadeira intenção por trás do exame.",
+      "crime": "CP.art215"
+    },
+    {
+      "id": "importunacao-sexual-onibus",
+      "descricao": "Dentro do ônibus lotado, o réu praticou ato libidinoso contra a vítima sem sua anuência, esfregando o corpo nela para satisfazer a própria lascívia, sem violência ou grave ameaça.",
+      "crime": "CP.art215-A"
+    },
+    {
+      "id": "casa-de-prostituicao-manter",
+      "descricao": "O réu mantinha, por conta própria, um estabelecimento onde ocorria exploração sexual de outras pessoas, ainda que sem obter lucro direto com isso.",
+      "crime": "CP.art229"
+    },
+    {
+      "id": "rufianismo-lucro-prostituicao",
+      "descricao": "O réu vivia às custas do dinheiro que a vítima ganhava com a prostituição, participando diretamente dos lucros dessa exploração.",
+      "crime": "CP.art230"
+    },
+    {
+      "id": "moeda-falsa-fabricar",
+      "descricao": "O réu fabricou papel-moeda falso, notas de cinquenta reais impressas numa impressora caseira, para colocar em circulação no comércio local.",
+      "crime": "CP.art289"
+    },
+    {
+      "id": "falsificacao-documento-particular-contrato",
+      "descricao": "O réu falsificou a assinatura da vítima em um contrato particular de compra e venda, documento particular, para simular uma dívida que não existia.",
+      "crime": "CP.art298"
+    },
+    {
+      "id": "falsidade-ideologica-declaracao",
+      "descricao": "Ao preencher o formulário de matrícula, documento particular verdadeiro na forma, o réu inseriu uma declaração falsa sobre o próprio endereço, com o fim de alterar a verdade sobre fato juridicamente relevante.",
+      "crime": "CP.art299"
+    },
+    {
+      "id": "falsa-identidade-abordagem-policial",
+      "descricao": "Para se esquivar de um mandado de prisão em aberto, o réu atribuiu-se falsa identidade perante os policiais, usando o nome do irmão para obter vantagem.",
+      "crime": "CP.art307"
+    },
+    {
+      "id": "prevaricacao-atrasar-processo",
+      "descricao": "Para favorecer um amigo pessoal, o servidor público deixou intencionalmente de praticar o ato de ofício que deveria ter feito no prazo devido.",
+      "crime": "CP.art319"
+    },
+    {
+      "id": "advocacia-administrativa-interesse-privado",
+      "descricao": "Valendo-se da qualidade de funcionário público, o réu patrocinou perante a própria repartição o interesse privado de uma empresa da qual era sócio.",
+      "crime": "CP.art321"
+    },
+    {
+      "id": "abandono-funcao-servidor",
+      "descricao": "Sem qualquer justificativa e sem pedir exoneração, o servidor público simplesmente parou de comparecer ao cargo que ocupava, abandonando a função.",
+      "crime": "CP.art323"
+    },
+    {
+      "id": "denunciacao-caluniosa-inquerito",
+      "descricao": "Sabendo que a vítima era inocente, o réu deu causa à instauração de um inquérito policial contra ela, imputando-lhe falsamente a prática de um furto.",
+      "crime": "CP.art339"
+    },
+    {
+      "id": "falso-testemunho-processo",
+      "descricao": "Ouvida como testemunha em juízo, a ré fez afirmação falsa sobre fatos que presenciou, para favorecer o réu do processo.",
+      "crime": "CP.art342"
+    },
+    {
+      "id": "exercicio-arbitrario-proprias-razoes",
+      "descricao": "Em vez de recorrer à Justiça para cobrar a dívida, o réu fez justiça pelas próprias mãos: foi até a casa da vítima e tomou de volta, pela força, a televisão vendida a prazo e não paga.",
+      "crime": "CP.art345"
+    },
+    {
+      "id": "favorecimento-pessoal-esconder-fugitivo",
+      "descricao": "Sabendo que o amigo era autor de um crime punido com reclusão e procurado pela polícia, o réu o auxiliou a subtrair-se à ação da autoridade pública, escondendo-o em casa.",
+      "crime": "CP.art348"
+    },
+    {
+      "id": "furto-durante-calamidade",
+      "descricao": "Aproveitando-se do caos causado pela enchente que atingiu a cidade, o réu subtraiu eletrodomésticos de casas abandonadas pelos moradores.",
+      "crime": "CP.art155"
+    },
+    {
+      "id": "roubo-transporte-coletivo",
+      "descricao": "Mediante grave ameaça com uma faca, o réu subtraiu os celulares dos passageiros dentro de um ônibus de transporte coletivo em movimento.",
+      "crime": "CP.art157"
+    },
+    {
+      "id": "roubo-restricao-liberdade-vitima",
+      "descricao": "Depois de roubar a vítima na rua, o réu a manteve dentro do próprio carro dela por mais de uma hora, restringindo sua liberdade, antes de finalmente abandoná-la.",
+      "crime": "CP.art157",
+      "sugerir": [
+        "CP.art157.§2.V"
+      ]
+    },
+    {
+      "id": "homicidio-relevante-valor-moral",
+      "descricao": "Horas depois de descobrir que um homem havia cometido um grave crime sexual contra sua filha menor, o pai, impelido por relevante valor moral, o matou.",
+      "crime": "CP.art121",
+      "sugerir": [
+        "CP.art121.§1"
+      ]
+    },
+    {
+      "id": "homicidio-qualificado-meio-cruel",
+      "descricao": "O réu matou a vítima utilizando meio cruel, torturando-a por horas antes de causar a morte.",
+      "crime": "CP.art121",
+      "sugerir": [
+        "CP.art121.§2.III"
+      ]
+    },
+    {
+      "id": "lesao-corporal-seguida-de-morte",
+      "descricao": "Sem intenção de matar, o réu desferiu um soco na vítima, que caiu, bateu a cabeça e morreu em decorrência do ferimento.",
+      "crime": "CP.art129",
+      "sugerir": [
+        "CP.art129.§3"
+      ]
+    },
+    {
+      "id": "lesao-corporal-gravissima-desfiguracao",
+      "descricao": "Na agressão, o réu cortou o rosto da vítima com um caco de vidro, causando deformidade permanente.",
+      "crime": "CP.art129",
+      "sugerir": [
+        "CP.art129.§2.IV"
+      ]
+    },
+    {
+      "id": "furto-qualificado-escalada",
+      "descricao": "O réu pulou o muro da casa durante a noite e subtraiu uma bicicleta que estava no quintal.",
+      "crime": "CP.art155",
+      "sugerir": [
+        "CP.art155.§4.II"
+      ]
+    }
+  ]
+}
