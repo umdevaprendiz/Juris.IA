@@ -1,4 +1,4 @@
-# sergius-ia-Judge: motor de dosimetria penal
+# Juris.ia: motor de dosimetria penal
 
 Projeto de estudo de uma IA que auxilia na **dosimetria da pena** (Código Penal
 brasileiro), pensado para estudantes de Direito. Hoje o repositório contém:

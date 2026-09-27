@@ -1,4 +1,4 @@
-"""API HTTP do sergius-ia-Judge.
+"""API HTTP do Juris.ia.
 
 Rodar localmente:  uvicorn api.app:app --reload
 Páginas para estudantes: http://127.0.0.1:8000/
@@ -62,7 +62,7 @@ log = logging.getLogger(__name__)
 limite_calculo = RateLimiter("calculo", limite=60, janela=60, limite_global=3000)
 
 app = FastAPI(
-    title="sergius-ia-Judge",
+    title="Juris.ia",
     version="0.1.0",
     description=(
         "Motor de dosimetria penal (sistema trifásico do art. 68 do CP) para estudo. "
