@@ -12,6 +12,8 @@ As regras de montagem, todas visíveis ao estudante como alertas:
 
 from fractions import Fraction
 
+from erros import ErroDeEntrada
+
 from .analise import CrimeAgent
 from .catalogo import (
     AGRAVANTES,
@@ -42,7 +44,7 @@ def montar_entrada(agente: CrimeAgent, escolhas: dict) -> tuple[dict, list[str]]
     desconhecidos += [c for c in escolhas.get("atenuantes", []) if c not in _ATENUANTES]
     desconhecidos += [c for c in escolhas.get("circunstancias_desfavoraveis", []) if c not in _JUDICIAIS]
     if desconhecidos:
-        raise ValueError(f"itens que não pertencem a este crime: {', '.join(sorted(set(desconhecidos)))}")
+        raise ErroDeEntrada(f"itens que não pertencem a este crime: {', '.join(sorted(set(desconhecidos)))}")
 
     # ---------- faixa ----------
     formas = [formas_do_crime[r] for r in formas_do_crime if r in set(escolhas.get("formas", []))]

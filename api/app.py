@@ -6,6 +6,7 @@ Documentação interativa da API: http://127.0.0.1:8000/docs
 """
 
 import json
+import logging
 import os
 from functools import cache
 from threading import Thread
@@ -19,6 +20,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 
+from erros import ErroDeEntrada
 from sentencing import (
     JudicialCircumstance,
     Composition,
@@ -54,6 +56,8 @@ from .esquemas import (
 
 ARQUIVO_EXEMPLOS = Path(__file__).resolve().parent.parent / "data" / "casos" / "dosimetrias.json"
 
+log = logging.getLogger(__name__)
+
 # cálculo e correção: folga para um estudante praticando, sem deixar um script ocupar o servidor
 limite_calculo = RateLimiter("calculo", limite=60, janela=60, limite_global=3000)
 
@@ -88,10 +92,24 @@ Thread(target=base_de_fontes, daemon=True).start()
 app.mount("/static", StaticFiles(directory=PASTA_ESTATICOS), name="static")
 
 
-@app.exception_handler(ValueError)
-async def erro_de_entrada(_: Request, erro: ValueError) -> JSONResponse:
-    """Regras do motor violadas pela entrada (ex.: fração acima da mínima sem justificativa)."""
+@app.exception_handler(ErroDeEntrada)
+async def erro_de_entrada(_: Request, erro: ErroDeEntrada) -> JSONResponse:
+    """Regras do motor violadas pela entrada (ex.: fração acima da mínima sem justificativa).
+
+    Só ErroDeEntrada (erros.py) chega aqui: é a exceção que o próprio projeto levanta com
+    uma mensagem pronta para mostrar. Qualquer outro erro cai em erro_inesperado, que nunca
+    ecoa a mensagem original.
+    """
     return JSONResponse(status_code=422, content={"detail": str(erro)})
+
+
+@app.exception_handler(Exception)
+async def erro_inesperado(_: Request, erro: Exception) -> JSONResponse:
+    """Rede de segurança: nenhum erro que não seja um dos tratados acima chega ao visitante
+    com a própria mensagem (poderia trazer caminho de arquivo, string de conexão ou outro
+    detalhe interno). O detalhe completo vai só para o log do servidor."""
+    log.error("erro não tratado: %s: %s", type(erro).__name__, erro, exc_info=erro)
+    return JSONResponse(status_code=500, content={"detail": "O servidor teve um problema. Tente de novo em instantes."})
 
 
 _MENSAGENS = {

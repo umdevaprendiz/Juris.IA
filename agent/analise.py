@@ -17,6 +17,7 @@ from collections import Counter, defaultdict
 from functools import cache
 from threading import Lock
 
+from erros import ErroDeEntrada
 from sentencing import Penalty, pena_para_dict
 from sources.busca import SINONIMOS, LegalSearchIndex, _Bm25Field, base_de_fontes, normalizar, termos
 from sources.vocabulario import lematizar
@@ -147,7 +148,7 @@ class CrimeAgent:
     def estrutura(self, rotulo: str, texto: str = "") -> dict:
         crime = self.crimes.get(rotulo)
         if crime is None:
-            raise ValueError(f"crime não encontrado na base: {rotulo}")
+            raise ErroDeEntrada(f"crime não encontrado na base: {rotulo}")
         frases = _frases(texto)
         com_violencia = bool(COM_VIOLENCIA.search(crime.caput))
 

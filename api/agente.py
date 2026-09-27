@@ -8,6 +8,7 @@ from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
 from agent.analise import agente
 from agent.calculo import montar_entrada
+from erros import ErroDeEntrada
 from sentencing import Composition, JudicialCircumstance, entrada_de_dict, resultado_para_dict
 from privacy import anonimizar
 
@@ -67,10 +68,10 @@ class AgentCalculationRequest(BaseModel):
     def validar_formatos(self) -> None:
         for rotulo in [*self.formas, *self.causas, *self.fracoes_escolhidas]:
             if not re.match(ROTULO, rotulo):
-                raise ValueError(f"rótulo inválido: {rotulo[:60]!r}")
+                raise ErroDeEntrada(f"rótulo inválido: {rotulo[:60]!r}")
         for codigo in [*self.agravantes, *self.atenuantes]:
             if not re.match(CODIGO, codigo):
-                raise ValueError(f"código inválido: {codigo[:60]!r}")
+                raise ErroDeEntrada(f"código inválido: {codigo[:60]!r}")
 
 
 class AgentCalculationOutput(BaseModel):
@@ -129,7 +130,7 @@ def calcular(escolhas: AgentCalculationRequest) -> dict:
     try:
         validada = SentencingRequest.model_validate(entrada)
     except ValidationError as erro:
-        raise ValueError(f"não foi possível montar a dosimetria: {erro.errors()[0]['msg']}") from None
+        raise ErroDeEntrada(f"não foi possível montar a dosimetria: {erro.errors()[0]['msg']}") from None
     resultado = entrada_de_dict(validada.model_dump(mode="json")).calcular()
     return {
         "entrada": validada.model_dump(mode="json"),

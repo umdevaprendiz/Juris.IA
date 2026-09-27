@@ -55,8 +55,13 @@ tratada como requisito em cada funcionalidade:
   `X-Forwarded-For` enviado pelo próprio visitante, não são usados.
 - **Outros sites só leem** (CORS libera apenas `GET`): nenhum site de terceiros consegue
   gravar ou excluir casos pelo navegador de um visitante.
-- **Erros sem detalhes internos**: falhas de banco viram uma mensagem genérica, e erros de
-  validação não ecoam textos longos.
+- **Erros sem detalhes internos** (`erros.py`, `api/app.py`): o projeto levanta
+  `ErroDeEntrada` (um `ValueError`) só nos pontos deliberados de validação — a mensagem
+  desses é segura para mostrar, e é a única exceção própria que a API ecoa (`422`). Qualquer
+  outra exceção (um bug, uma falha de biblioteca) nunca chega ao visitante com a própria
+  mensagem: cai num handler genérico que devolve `"O servidor teve um problema..."` (`500`)
+  e manda o detalhe completo só para o log do servidor. Falhas de banco viram mensagem
+  genérica do mesmo jeito, e erros de validação não ecoam textos longos.
 - **Banco**: consultas parametrizadas (SQLAlchemy) e esquema versionado por migrações
   (Alembic). Em produção, a conexão é sempre TLS **com verificação do servidor**: sem um
   `MYSQL_CA_CERT` válido, a gravação de casos fica desligada em vez de conectar sem
@@ -359,6 +364,7 @@ resultado, e `resultado_para_dict(resultado)` o converte de volta para JSON.
 ## Estrutura
 
 ```
+erros.py                 ErroDeEntrada: a única exceção própria da API, com mensagem segura
 sentencing/              motor de cálculo (a API pública é importada de `sentencing`)
   valores/               Fraction, Penalty, PenaltyRange
   circunstancias/        judiciais (art. 59), legais (arts. 61-67), causas (3ª fase)

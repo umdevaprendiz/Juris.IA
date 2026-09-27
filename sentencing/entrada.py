@@ -17,11 +17,13 @@ Exemplo:
     }
 
 Frações são textos "numerador/denominador"; penas são {"anos", "meses", "dias"} (todos
-opcionais). Erros de formato viram `ValueError` com mensagem em português.
+opcionais). Erros de formato viram `ErroDeEntrada` (erros.py) com mensagem em português.
 """
 
 from dataclasses import dataclass
 from typing import Any
+
+from erros import ErroDeEntrada
 
 from .circunstancias import (
     ModifyingCause,
@@ -74,7 +76,7 @@ def entrada_de_dict(dados: dict[str, Any]) -> SentencingInput:
     estrategia = _obrigatorio(dados, "estrategia", "entrada")
     tipo = _obrigatorio(estrategia, "tipo", "estrategia")
     if tipo not in ESTRATEGIAS:
-        raise ValueError(f"estrategia.tipo inválido: {tipo!r} (opções: {', '.join(ESTRATEGIAS)})")
+        raise ErroDeEntrada(f"estrategia.tipo inválido: {tipo!r} (opções: {', '.join(ESTRATEGIAS)})")
 
     return SentencingInput(
         faixa=PenaltyRange(
@@ -101,18 +103,18 @@ def entrada_de_dict(dados: dict[str, Any]) -> SentencingInput:
 def pena_de_dict(dados: dict[str, int]) -> Penalty:
     desconhecidas = set(dados) - {"anos", "meses", "dias"}
     if desconhecidas:
-        raise ValueError(f"pena com campos desconhecidos: {sorted(desconhecidas)} (use anos, meses, dias)")
+        raise ErroDeEntrada(f"pena com campos desconhecidos: {sorted(desconhecidas)} (use anos, meses, dias)")
     valores = {k: int(v) for k, v in dados.items()}
     negativos = [k for k, v in valores.items() if v < 0]
     if negativos:
-        raise ValueError(f"pena com valores negativos: {negativos}")
+        raise ErroDeEntrada(f"pena com valores negativos: {negativos}")
     return Penalty.de_anos_meses_dias(**valores)
 
 
 def fracao_de_texto(texto: str) -> Fraction:
     numerador, barra, denominador = str(texto).partition("/")
     if not barra or not numerador.strip().isdigit() or not denominador.strip().isdigit():
-        raise ValueError(f"fração inválida: {texto!r} (use o formato '1/3')")
+        raise ErroDeEntrada(f"fração inválida: {texto!r} (use o formato '1/3')")
     return Fraction(int(numerador), int(denominador))
 
 
@@ -132,7 +134,7 @@ def _causa_de_dict(item: dict[str, Any]) -> ModifyingCause:
 
 def _obrigatorio(dados: dict[str, Any], chave: str, onde: str) -> Any:
     if chave not in dados or dados[chave] is None:
-        raise ValueError(f"campo obrigatório ausente em {onde}: {chave!r}")
+        raise ErroDeEntrada(f"campo obrigatório ausente em {onde}: {chave!r}")
     return dados[chave]
 
 
@@ -141,4 +143,4 @@ def _enum(tipo, valor, campo):
         return tipo(valor)
     except ValueError:
         opcoes = ", ".join(membro.value for membro in tipo)
-        raise ValueError(f"{campo} inválido: {valor!r} (opções: {opcoes})") from None
+        raise ErroDeEntrada(f"{campo} inválido: {valor!r} (opções: {opcoes})") from None

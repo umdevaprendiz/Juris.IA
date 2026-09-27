@@ -1,5 +1,7 @@
 from dataclasses import dataclass
 
+from erros import ErroDeEntrada
+
 from ..circunstancias.judiciais import JudicialCircumstance, Assessment
 from ..valores.faixa import PenaltyRange
 from ..relatorio.passo import Step
@@ -30,7 +32,7 @@ def calcular_pena_base(
     if recebidas != esperadas:
         faltando = esperadas - recebidas
         desconhecidas = recebidas - esperadas
-        raise ValueError(
+        raise ErroDeEntrada(
             "circunstâncias devem cobrir exatamente as 8 do art. 59 "
             f"(faltando={faltando or None}, desconhecidas={desconhecidas or None})"
         )

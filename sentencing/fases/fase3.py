@@ -3,6 +3,8 @@ from dataclasses import dataclass
 from enum import Enum
 import fractions
 
+from erros import ErroDeEntrada
+
 from ..circunstancias.causas import ModifyingCause, CauseDirection, CauseOrigin, racional
 from ..relatorio.passo import Step
 from ..valores.pena import Penalty
@@ -115,7 +117,7 @@ def _aplicar(
         else:
             depois = exato + sinal * fracao * pena_intermediaria.dias
         if depois < 0:
-            raise ValueError(
+            raise ErroDeEntrada(
                 "as diminuições somadas sobre a pena intermediária passam de 100% da pena; "
                 "use a composição em cascata ou revise as frações"
             )

@@ -1,5 +1,7 @@
 from dataclasses import dataclass
 
+from erros import ErroDeEntrada
+
 from .pena import Penalty
 
 
@@ -13,7 +15,7 @@ class PenaltyRange:
 
     def __post_init__(self) -> None:
         if self.minimo > self.maximo:
-            raise ValueError("mínimo não pode ser maior que o máximo")
+            raise ErroDeEntrada("mínimo não pode ser maior que o máximo")
 
     def contem(self, pena: Penalty) -> bool:
         return self.minimo <= pena <= self.maximo

@@ -3,6 +3,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 from functools import total_ordering
 
+from erros import ErroDeEntrada
+
 from .fracao import Fraction
 
 DIAS_POR_ANO = 365
@@ -18,7 +20,7 @@ class Penalty:
 
     def __post_init__(self) -> None:
         if self.dias < 0:
-            raise ValueError("pena não pode ter dias negativos")
+            raise ErroDeEntrada("pena não pode ter dias negativos")
 
     @classmethod
     def de_anos_meses_dias(cls, anos: int = 0, meses: int = 0, dias: int = 0) -> "Penalty":
