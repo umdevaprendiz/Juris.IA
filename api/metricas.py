@@ -8,6 +8,7 @@ pessoais antes da anonimização) aparecem só pelo tamanho, nunca pelo conteúd
 
 import json
 import logging
+import sys
 import time
 from datetime import datetime, timezone
 from urllib.parse import parse_qs
@@ -17,7 +18,9 @@ TAMANHO_MAXIMO_CAMPO = 80
 log = logging.getLogger("sergius.metricas")
 log.propagate = False
 if not log.handlers:
-    _saida = logging.StreamHandler()
+    # stdout, não o padrão (stderr) do StreamHandler: mesma saída do resto do log da API,
+    # para aparecer junto no painel de logs da hospedagem (ex.: Render)
+    _saida = logging.StreamHandler(sys.stdout)
     _saida.setFormatter(logging.Formatter("%(message)s"))
     log.addHandler(_saida)
 log.setLevel(logging.INFO)

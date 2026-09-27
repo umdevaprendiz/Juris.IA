@@ -87,6 +87,11 @@ Exemplo de uma linha:
 ```json
 {"data_hora": "2026-01-15T14:32:07+00:00", "acao": "calcular pena", "rota": "/dosimetria/calcular", "status": 200, "duracao_ms": 4.8, "enviado": {"faixa": {"...": "..."}}}
 ```
+
+Todo log da API (essas linhas, os erros inesperados, os avisos de banco) vai para a saída
+padrão (`stdout`), formatado e sem cores ANSI: sem isso, parte cai no `stderr` sem formato
+nenhum, e alguns painéis de hospedagem (Render, por exemplo) mostram pior ou escondem o que
+não vem por `stdout`.
   `scripts/verificar_vazamentos.py` varre todos os arquivos do repositório (antes de cada commit
   e no CI) atrás de chaves, tokens, URLs com senha, caminhos locais, e-mails pessoais, arquivos
   proibidos e valores do `.env` local, e reprova o build se achar algum.

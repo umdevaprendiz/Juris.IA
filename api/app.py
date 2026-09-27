@@ -8,6 +8,7 @@ Documentação interativa da API: http://127.0.0.1:8000/docs
 import json
 import logging
 import os
+import sys
 from functools import cache
 from threading import Thread
 from pathlib import Path
@@ -55,6 +56,12 @@ from .esquemas import (
 )
 
 ARQUIVO_EXEMPLOS = Path(__file__).resolve().parent.parent / "data" / "casos" / "dosimetrias.json"
+
+# sem isto, um log sem handler configurado (ex.: erro inesperado, falha de banco) some ou vai
+# parar no stderr sem formato; hospedagens como o Render mostram melhor uma saída assim, em
+# stdout e com data/hora. As "métricas de uso" (api/metricas.py) têm o próprio handler, à parte,
+# porque são uma linha de JSON só, sem prefixo.
+logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s", stream=sys.stdout)
 
 log = logging.getLogger(__name__)
 
