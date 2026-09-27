@@ -1,4 +1,4 @@
-"""Tabelas do banco (SQLAlchemy). Mudanças de esquema entram por migração em migracoes/."""
+"""Tabelas do banco (SQLAlchemy). Mudanças de esquema entram por migração em migrations/."""
 
 import secrets
 from datetime import datetime, timezone

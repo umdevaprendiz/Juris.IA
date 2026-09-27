@@ -23,7 +23,7 @@ def migrar() -> bool:
         print(f"banco: DESLIGADO por segurança: {bloqueio_de_seguranca()}")
         return False
     configuracao = Config(str(Path(RAIZ) / "alembic.ini"))
-    configuracao.set_main_option("script_location", str(Path(RAIZ) / "migracoes"))
+    configuracao.set_main_option("script_location", str(Path(RAIZ) / "migrations"))
     command.upgrade(configuracao, "head")
     print("banco: migrações aplicadas")
     with fabrica_de_sessoes()() as sessao:
