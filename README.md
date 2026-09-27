@@ -152,10 +152,10 @@ estudante pode escrever do próprio jeito.
 
 ## Base de legislação e busca (RAG)
 
-O agente consulta a lei numa base própria, sem IA de terceiros: **5.260 artigos** extraídos
+O agente consulta a lei numa base própria, sem IA de terceiros: **5.271 artigos** extraídos
 dos PDFs oficiais do Senado e da Câmara (Código Penal, CPP, Constituição e ADCT, LEP, Lei
-dos Crimes Hediondos, Lei 9.099, Contravenções Penais, CDC, Código Civil e as leis que vêm
-nesses livros). Um registro por artigo, com epígrafe ("Furto"), título e capítulo.
+dos Crimes Hediondos, Lei 9.099, Contravenções Penais, CDC, LINDB, Código Civil e as leis que
+vêm nesses livros). Um registro por artigo, com epígrafe ("Furto"), título e capítulo.
 
 - **Ingestão** (`sources/`, `scripts/construir_base_de_fontes.py`): lê os PDFs de
   `materiais/legislacao/`, tira cabeçalhos, números de página e notas de rodapé, junta palavras
@@ -166,14 +166,15 @@ nesses livros). Um registro por artigo, com epígrafe ("Furto"), título e capí
   e caput), palavras reduzidas ao radical e sem acentos, sinônimos leigos ("assalto com faca"
   encontra roubo e arma branca) e referências diretas ("art. 157 do CP"). É determinística e
   cita só o que está na base.
-- **Casos de teste** (`data/sources/perguntas.json`, `python -m sources.avaliacao`): 43
-  perguntas escritas como um estudante escreveria. Hoje 88% trazem o artigo certo em 1º lugar
+- **Casos de teste** (`data/sources/perguntas.json`, `python -m sources.avaliacao`): 46
+  perguntas escritas como um estudante escreveria. Hoje 89,1% trazem o artigo certo em 1º lugar
   e 100% entre os 5 primeiros.
 - **Uso**: a página **Pesquisar na lei** e `GET /fontes/buscar?q=...`; o cálculo da
   dosimetria devolve em `fontes_citadas` o texto de cada dispositivo usado, conferido na base
   (um rótulo que não existe volta com `encontrado: false`).
 - **Limites conhecidos**: a Lei de Drogas (11.343/2006) não veio em nenhum PDF; o Código Civil
-  e as leis do mesmo livro são da edição de 2008 e aparecem com aviso de edição antiga.
+  e as leis do mesmo livro são da edição de 2008 e aparecem com aviso de edição antiga. A LINDB
+  já usa uma fonte própria atualizada (Câmara dos Deputados, até a EC/2018), separada desse livro.
 
 ## Banco de dados (MySQL)
 

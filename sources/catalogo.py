@@ -56,6 +56,12 @@ FONTES: tuple[SourceDocument, ...] = (
         titulo="Código Civil brasileiro e legislação correlata, 2ª ed. (Senado Federal)",
         atualizado_ate="2008-07",
     ),
+    SourceDocument(
+        id="lindb",
+        arquivo="LINDB.pdf",
+        titulo="Lei de Introdução às Normas do Direito Brasileiro, norma atualizada (Câmara dos Deputados)",
+        atualizado_ate="2018-04",
+    ),
 )
 
 # "Decreto-lei 2.848/1940" -> (sigla, nome)
