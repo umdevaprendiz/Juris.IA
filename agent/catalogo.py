@@ -216,7 +216,7 @@ INDICIOS_DE_CRIMES: tuple[tuple[str, float, re.Pattern], ...] = tuple(
             rf"|{_PARCEIRA}[^.;]{{0,60}}\b(?:morreu|morta|faleceu|assassinad)",
         ),
         ("CP.art129", 22, r"agred|les[ãa]o corporal|\bsocos?\b|chutes?|espanc|machuc|feriu|hematoma|fratur"),
-        ("CP.art171", 26, r"engan|golpe|estelionat|fraude|se passou por|induz\w* (?:a v[íi]tima )?em erro|link falso|falso (?:estorno|boleto|leil[ãa]o)|vantagem il[íi]cita"),
+        ("CP.art171", 26, r"engan|golpe|estelionat|fraude|se passou por|induz\w*(?:-\w{1,4})?\s+(?:a v[íi]tima\s+)?em erro|link falso|falso (?:estorno|boleto|leil[ãa]o)|vantagem il[íi]cita"),
         ("CP.art180", 38, r"recepta|produto de (?:furto|roubo|crime)|sabendo (?:que|ser)[^.;]{0,40}(?:roubad|furtad|produto de|origem il[íi]cita)|pe[çc]as de (?:carros|ve[íi]culos) roubad"),
         ("CP.art147", 24, r"amea[çc]\w*[^.;]{0,40}(?:de morte|mat[áa]-l|de mal)|amea[çc]ou|(?:disse|falou|afirmou|avisou|prometeu|escreveu|gritou|mandou)[^.;]{0,60}\b(?:vai|vou|iria|ia|irá)\s+(?:matar|mat[áa]-l|machucar|bater|pegar|acabar com|quebrar)"),
         ("CP.art168", 30, r"apropri\w+ (?:d[ao]s? |de )?(?:quantia|dinheiro|valor|bem|bens)|apropriou-se|apropria[çc][ãa]o ind[ée]bita|n[ãa]o devolveu[^.;]{0,40}(?:empresa|dono|propriet)"),
