@@ -40,7 +40,10 @@ from .lei import CominatedPenalty, CrimeOption, CrimeType, ler_crime, ler_fracao
 # contravenções e crimes de leis especiais só vencem o Código Penal com vantagem clara
 _PESO_DA_LEI = {"CP": 1.0, "LCP": 0.75}
 _PESO_DAS_OUTRAS_LEIS = 0.85
-_FRASE = re.compile(r"[^.!?;\n]+[.!?;]?")
+# um ponto entre dígitos não separa frase: "R$ 3.000" e "2.5" não podem virar "R$ 3" + "000"
+# (o "R$ 3" isolado passaria por indício de furto de pequeno valor)
+_UNIDADE_DE_FRASE = r"(?:[^.!?;\n]|(?<=\d)\.(?=\d))"
+_FRASE = re.compile(rf"{_UNIDADE_DE_FRASE}+[.!?;]?")
 
 _AUSENCIAS = (
     ("antecedentes e reincidência do réu", re.compile(r"reincident|prim[áa]ri|antecedentes|condenad|nunca (?:foi|havia sido) (?:pres|process)", re.I)),
