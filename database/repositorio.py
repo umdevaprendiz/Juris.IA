@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 from sqlalchemy import delete, select
 from sqlalchemy.orm import Session
 
-from erros import ErroDeEntrada
+from erros import InputError
 from privacy import anonimizar
 
 from .modelos import CaseRecord, CaseStatus, _agora
@@ -18,7 +18,7 @@ PRAZO_SEM_VALIDACAO = timedelta(days=90)
 def salvar_caso(sessao: Session, descricao: str, consentimento: bool) -> CaseRecord:
     """Anonimiza a descrição e grava só a versão anonimizada. O texto original é descartado."""
     if not consentimento:
-        raise ErroDeEntrada("é preciso consentir com o armazenamento para salvar o caso")
+        raise InputError("é preciso consentir com o armazenamento para salvar o caso")
     anonimizada = anonimizar(descricao)
     caso = CaseRecord(
         descricao=anonimizada.texto,

@@ -73,7 +73,7 @@ class LegalProvision:
 
 
 @dataclass(slots=True)
-class _Segmento:
+class _Segment:
     norma: str
     ementa: str = ""
     linhas: list[str] = field(default_factory=list)
@@ -104,15 +104,15 @@ def cabecalho_de_lei(linhas: list[str], i: int) -> str | None:
     return f"{tipo} {correspondencia['numero']}/{ano}"
 
 
-def segmentar(linhas: list[str], fonte: SourceDocument) -> list[_Segmento]:
+def segmentar(linhas: list[str], fonte: SourceDocument) -> list[_Segment]:
     """Separa as linhas do documento por lei. Títulos repetidos (cabeçalho de página) são ignorados."""
     marcos = [(re.compile(padrao), sigla) for padrao, sigla in fonte.marcos]
-    segmentos: list[_Segmento] = []
-    atual: _Segmento | None = None
+    segmentos: list[_Segment] = []
+    atual: _Segment | None = None
     for i, linha in enumerate(linhas):
         marco = next((sigla for padrao, sigla in marcos if padrao.match(linha)), False)
         if marco is not False:
-            atual = _Segmento(norma=marco) if marco else None
+            atual = _Segment(norma=marco) if marco else None
             if atual:
                 segmentos.append(atual)
             continue
@@ -123,7 +123,7 @@ def segmentar(linhas: list[str], fonte: SourceDocument) -> list[_Segmento]:
         if norma is not None:
             if atual is not None and atual.norma == norma:
                 continue  # o título da lei repetido no alto da página
-            atual = _Segmento(norma=norma, ementa=_ementa(linhas, i))
+            atual = _Segment(norma=norma, ementa=_ementa(linhas, i))
             segmentos.append(atual)
             continue
         if atual is None or atual.encerrado:
@@ -137,7 +137,7 @@ def segmentar(linhas: list[str], fonte: SourceDocument) -> list[_Segmento]:
 
 def extrair_documento(fonte: SourceDocument, linhas: list[str]) -> list[LegalProvision]:
     """Todas as leis de um documento, com os artigos de cada uma (a mesma lei em trechos é unida)."""
-    por_norma: dict[str, _Segmento] = {}
+    por_norma: dict[str, _Segment] = {}
     for segmento in segmentar(linhas, fonte):
         existente = por_norma.get(segmento.norma)
         if existente is None:

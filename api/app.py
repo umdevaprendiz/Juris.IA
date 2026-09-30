@@ -21,7 +21,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 
-from erros import ErroDeEntrada
+from erros import InputError
 from sentencing import (
     JudicialCircumstance,
     Composition,
@@ -99,11 +99,11 @@ Thread(target=base_de_fontes, daemon=True).start()
 app.mount("/static", StaticFiles(directory=PASTA_ESTATICOS), name="static")
 
 
-@app.exception_handler(ErroDeEntrada)
-async def erro_de_entrada(_: Request, erro: ErroDeEntrada) -> JSONResponse:
+@app.exception_handler(InputError)
+async def erro_de_entrada(_: Request, erro: InputError) -> JSONResponse:
     """Regras do motor violadas pela entrada (ex.: fração acima da mínima sem justificativa).
 
-    Só ErroDeEntrada (erros.py) chega aqui: é a exceção que o próprio projeto levanta com
+    Só InputError (erros.py) chega aqui: é a exceção que o próprio projeto levanta com
     uma mensagem pronta para mostrar. Qualquer outro erro cai em erro_inesperado, que nunca
     ecoa a mensagem original.
     """
