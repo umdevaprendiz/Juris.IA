@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from erros import ErroDeEntrada
+from erros import InputError
 
 
 @dataclass(frozen=True, slots=True)
@@ -12,9 +12,9 @@ class Fraction:
 
     def __post_init__(self) -> None:
         if self.denominador <= 0:
-            raise ErroDeEntrada("denominador deve ser positivo")
+            raise InputError("denominador deve ser positivo")
         if self.numerador < 0:
-            raise ErroDeEntrada("numerador não pode ser negativo")
+            raise InputError("numerador não pode ser negativo")
 
     def aplicar(self, dias: int) -> int:
         """Fração de um total de dias. Frações de dia são desprezadas (art. 11 do CP)."""

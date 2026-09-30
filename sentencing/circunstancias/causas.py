@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from enum import Enum
 import fractions
 
-from erros import ErroDeEntrada
+from erros import InputError
 
 from ..valores.fracao import Fraction
 
@@ -42,17 +42,17 @@ class ModifyingCause:
         minima = racional(self.fracao_min)
         maxima = racional(self.fracao_max or self.fracao_min)
         if minima > maxima:
-            raise ErroDeEntrada(f"{self.codigo}: fração mínima maior que a máxima")
+            raise InputError(f"{self.codigo}: fração mínima maior que a máxima")
         if self.fracao_escolhida is None:
             return
         escolhida = racional(self.fracao_escolhida)
         if not minima <= escolhida <= maxima:
-            raise ErroDeEntrada(
+            raise InputError(
                 f"{self.codigo}: fração escolhida {self.fracao_escolhida} fora do intervalo legal "
                 f"({self.fracao_min} a {self.fracao_max or self.fracao_min})"
             )
         if escolhida != minima and not (self.justificativa and self.justificativa.strip()):
-            raise ErroDeEntrada(
+            raise InputError(
                 f"{self.codigo}: fração {self.fracao_escolhida} acima da mínima exige justificativa"
             )
 

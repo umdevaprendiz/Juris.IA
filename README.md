@@ -3,7 +3,7 @@
 Projeto de estudo de uma IA que auxilia na **dosimetria da pena** (Código Penal
 brasileiro), pensado para estudantes de Direito. Hoje o repositório contém:
 
-- o **motor de cálculo**, em Python puro, sem banco e sem LLM, que aplica o
+- o **motor de cálculo**, em Python puro e sem banco, que aplica o
   sistema trifásico do art. 68 do CP e devolve o passo a passo de cada fase;
 - **páginas para estudantes**, em https://sergius-ia-judge.onrender.com: calcular
   uma dosimetria com o passo a passo e praticar com casos, com correção fase a fase;
@@ -56,7 +56,7 @@ tratada como requisito em cada funcionalidade:
 - **Outros sites só leem** (CORS libera apenas `GET`): nenhum site de terceiros consegue
   gravar ou excluir casos pelo navegador de um visitante.
 - **Erros sem detalhes internos** (`erros.py`, `api/app.py`): o projeto levanta
-  `ErroDeEntrada` (um `ValueError`) só nos pontos deliberados de validação — a mensagem
+  `InputError` (um `ValueError`) só nos pontos deliberados de validação — a mensagem
   desses é segura para mostrar, e é a única exceção própria que a API ecoa (`422`). Qualquer
   outra exceção (um bug, uma falha de biblioteca) nunca chega ao visitante com a própria
   mensagem: cai num handler genérico que devolve `"O servidor teve um problema..."` (`500`)
@@ -370,7 +370,7 @@ resultado, e `resultado_para_dict(resultado)` o converte de volta para JSON.
 ## Estrutura
 
 ```
-erros.py                 ErroDeEntrada: a única exceção própria da API, com mensagem segura
+erros.py                 InputError: a única exceção própria da API, com mensagem segura
 sentencing/              motor de cálculo (a API pública é importada de `sentencing`)
   valores/               Fraction, Penalty, PenaltyRange
   circunstancias/        judiciais (art. 59), legais (arts. 61-67), causas (3ª fase)
