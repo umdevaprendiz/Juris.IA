@@ -3,7 +3,7 @@
 Projeto de estudo de uma IA que auxilia na **dosimetria da pena** (Código Penal
 brasileiro), pensado para estudantes de Direito. Hoje o repositório contém:
 
-- o **motor de cálculo**, em Python puro, sem banco e sem LLM, que aplica o
+- o **motor de cálculo**, em Python puro e sem banco, que aplica o
   sistema trifásico do art. 68 do CP e devolve o passo a passo de cada fase;
 - **páginas para estudantes**, em https://sergius-ia-judge.onrender.com: calcular
   uma dosimetria com o passo a passo e praticar com casos, com correção fase a fase;
