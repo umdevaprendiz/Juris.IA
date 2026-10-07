@@ -2,7 +2,7 @@
 # O leitor de sentenças (pacote sentencas/) precisa ler PDF.
 pypdf==6.19.0
 # API HTTP (pacote api/)
-fastapi==0.141.1
+fastapi==0.142.2
 uvicorn==0.52.4
 # páginas para estudantes (pacote web/): templates HTML
 jinja2==3.1.6
