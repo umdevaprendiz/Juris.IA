@@ -1,7 +1,7 @@
 # Dois alvos:
 #   api (padrão): só o necessário para servir a API; é o que se usa para hospedar.
 #   dev: acrescenta o Jupyter para rodar e editar os testes em notebook.
-FROM python:3.14-slim AS base
+FROM python:3.15-slim AS base
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
